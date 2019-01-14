@@ -1,0 +1,18 @@
+name: command_executor
+version: 0.1.0
+
+authors:
+  - Sergey Kojin <sergey.kojin@gmail.com>
+
+targets:
+  command_executor:
+    main: src/command_executor.cr
+
+crystal: 0.27.0
+
+license: MIT
+
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
