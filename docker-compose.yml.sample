@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      - SECRET=MktN7lnIAcNvVt5JpuqK3AELAGtRoW9G
+      - PORT=5100
+    ports:
+      - "5100:5100"
