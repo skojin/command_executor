@@ -1,15 +1,18 @@
-FROM crystallang/crystal:latest
+FROM alpine:latest as builder
+RUN apk add -u crystal shards libc-dev zlib-dev openssl-dev libressl2.7-libcrypto
+RUN apk add -u unzip curl
+WORKDIR /src
 
-RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl unzip
+# download pup
+RUN curl -sOL https://github.com/ericchiang/pup/releases/download/v0.4.0/pup_v0.4.0_linux_amd64.zip && unzip pup_v0.4.0_linux_amd64.zip && rm pup_v0.4.0_linux_amd64.zip
 
-RUN curl -sOL https://github.com/ericchiang/pup/releases/download/v0.4.0/pup_v0.4.0_linux_amd64.zip && unzip pup_v0.4.0_linux_amd64.zip && rm pup_v0.4.0_linux_amd64.zip && mv pup /usr/local/bin
-
-ADD . /app
-WORKDIR /app
-
+COPY . .
 RUN shards build --production
+RUN crystal build --release --static src/server.cr -o /src/server
 
-RUN crystal build --release src/server.cr
-
-CMD ./server
+FROM progrium/busybox
+RUN opkg-install curl
+WORKDIR /app
+COPY --from=builder /src/server /app/server
+COPY --from=builder /src/pup /usr/local/bin/pup
+ENTRYPOINT ["/app/server"]
