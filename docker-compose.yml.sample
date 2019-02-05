@@ -1,9 +1,9 @@
-version: '3'
+version: '2'
 services:
   web:
     build: .
     environment:
-      - SECRET=MktN7lnIAcNvVt5JpuqK3AELAGtRoW9G
-      - PORT=5100
+      - SECRET=XXX
+      - PORT=5000
     ports:
-      - "5100:5100"
+      - "5000:5000"
