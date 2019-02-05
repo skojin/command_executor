@@ -10,8 +10,8 @@ COPY . .
 RUN shards build --production
 RUN crystal build --release --static src/server.cr -o /src/server
 
-FROM progrium/busybox
-RUN opkg-install curl
+FROM alpine:latest
+RUN apk add -u --no-cache curl
 WORKDIR /app
 COPY --from=builder /src/server /app/server
 COPY --from=builder /src/pup /usr/local/bin/pup

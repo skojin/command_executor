@@ -6,10 +6,16 @@ Server that execute shell command passed in request
 
 ```
 git clone git@github.com:skojin/command_executor.git
+
+docker build -t command_executor . && docker run --name command_executor --rm -p 5100:5000 -e SECRET=XXX -it command_executor
+
+# OR
+
 cp docker-compose.yml.sample docker-compose.yml
 # set PORT and SERCRET enviroment variables in docker-compose.yml
 docker-compose build && docker-compose create
 docker-compose start
+
 ```
 
 ## Usage
