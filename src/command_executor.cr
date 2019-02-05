@@ -13,7 +13,11 @@ def execute_command(cmd : String)
   end
 end
 
-post "/#{ENV["SECRET"]?}" do |env|
+post "/:secret" do |env|
+  unless env.params.url["secret"] == ENV["SECRET"]?
+    halt env, status_code: 403, response: "Forbidden"
+  end
+
   result, ok = execute_command(env.params.body["cmd"])
   if ok
     env.response.content_type = "application/json"
