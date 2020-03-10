@@ -1,6 +1,7 @@
-FROM alpine:latest as builder
-RUN apk add -u crystal shards libc-dev zlib-dev openssl-dev libressl2.7-libcrypto
-RUN apk add -u unzip curl
+FROM alpine:3.10.1 as builder
+# unzip & curl to download pup
+RUN apk add -u libc-dev zlib-dev openssl-dev libressl2.7-libcrypto unzip curl
+RUN apk add -u crystal=0.29.0-r0 shards
 WORKDIR /src
 
 # download pup
@@ -10,7 +11,7 @@ COPY . .
 RUN shards build --production
 RUN crystal build --release --static src/server.cr -o /src/server
 
-FROM alpine:latest
+FROM alpine:3.10.1
 RUN apk add -u --no-cache curl
 WORKDIR /app
 COPY --from=builder /src/server /app/server
