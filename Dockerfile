@@ -15,6 +15,7 @@ RUN crystal build --release --static src/server.cr -o /src/server
 
 FROM alpine:3.10.1
 RUN apk add -u --no-cache curl jq
+RUN curl -s https://gist.githubusercontent.com/skojin/a24cd8e6384583782afe0e36cc2bbdf4/raw/5507dca1dc4c5f3777d57e4fe98bea62552f8091/if_jq.sh -o /usr/local/bin/if_jq && chmod +x /usr/local/bin/if_jq
 WORKDIR /app
 COPY --from=builder /src/pup /usr/local/bin/pup
 COPY --from=builder /src/server /app/server
