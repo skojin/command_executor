@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# test input with jq, if ok then show input, otherwise exit with non 0 exit code
+# echo '{"success": true}' | jq -e '.success | select(. == true)' # => {"success": true}
+# echo '{"success": false}' | jq -e '.success | select(. == true)' # => exit code non 0
+
+input=`cat`;
+
+if echo "$input" | jq -e "$1" > /dev/null ; then
+  echo "$input"
+else
+  exit $?
+fi

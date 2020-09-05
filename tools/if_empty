@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# if pipe is empty then show ARGV[0]
+# else show pipe
+
+input=`cat`;
+
+if [ -z "$input" ] ; then
+  echo "$1"
+else
+  echo "$input"
+fi
