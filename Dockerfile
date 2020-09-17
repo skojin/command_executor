@@ -1,4 +1,4 @@
-FROM crystallang/crystal:0.34.0-alpine as builder
+FROM crystallang/crystal:0.35.1-alpine as builder
 
 # unzip & curl to download pup
 RUN apk add -u --no-cache unzip curl
