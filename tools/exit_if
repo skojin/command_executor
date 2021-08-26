@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# if pipe is equal to ARGV[0] then exit with non zero code
+# else show pipe
+
+input=`cat`;
+
+if [ "$input" = "$1" ] ; then
+  exit 99
+else
+  echo "$input"
+fi
